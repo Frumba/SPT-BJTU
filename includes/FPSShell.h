@@ -6,6 +6,7 @@
 
 #include        "Exception.hpp"
 #include        "Utilities.hpp"
+#include        "UDF.h"
 
 #define         FILE_SYSTEM "/dev/sr0"
 
@@ -22,6 +23,7 @@ private: // Functions
 
 private: // Members
     std::string _rootDir;
+    UDF *       _udf;
 };
 
 #endif	/* FPSSHELL_H */
