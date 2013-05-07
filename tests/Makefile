@@ -1,12 +1,9 @@
 NAME		= fps-shell
-SRCS		= $(SRCS_DIR)/main.cpp		\
-		  $(SRCS_DIR)/FPSShell.cpp	\
-		  $(SRCS_DIR)/UDF.cpp		\
+SRCS		= $(SRCS_DIR)/test-shell-command.cpp		\
 		  $(SRCS_DIR)/ShellCommands.cpp
-
-SRCS_DIR	= srcs
+SRCS_DIR	= ../srcs
 OBJS		= $(SRCS:.cpp=.o)
-CXXFLAGS	+= -W -Wall -Werror -Iincludes
+CXXFLAGS	+= -W -Wall -I../includes
 CXX		= g++
 
 all		: $(NAME)
