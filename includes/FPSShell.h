@@ -8,10 +8,11 @@
 
 #include        "Exception.hpp"
 #include        "Utilities.hpp"
+#include        "ShellCommands.hpp"
 
 #define         FILE_SYSTEM "/dev/sr0"
 
-typedef void    (*FuncType)(char *const*);
+typedef bool    (ShellCommands::*FuncType)(char *const*);
 
 class           FPSShell
 {
@@ -26,6 +27,7 @@ private: // Functions
 
 private: // Members
     std::string _rootDir;
+    ShellCommands*  _cmd;
     char        _line[256];
     char*       _token;
     std::map<std::string, FuncType> _Functions;

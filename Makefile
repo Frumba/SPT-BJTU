@@ -1,6 +1,7 @@
 NAME		= fps-shell
 SRCS		= $(SRCS_DIR)/main.cpp		\
-		  $(SRCS_DIR)/FPSShell.cpp
+		  $(SRCS_DIR)/FPSShell.cpp	\
+		  $(SRCS_DIR)/ShellCommands.cpp
 SRCS_DIR	= srcs
 OBJS		= $(SRCS:.cpp=.o)
 CXXFLAGS	+= -W -Wall -Werror -Iincludes

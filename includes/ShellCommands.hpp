@@ -32,8 +32,8 @@ public:
 	/*
 	** Attributs
 	*/
+private: 
 	const char* root_path_;
-private:
 
 };
 
