@@ -3,11 +3,15 @@
 
 #include        <iostream>
 #include        <unistd.h>
+#include        <string.h>
+#include        <map>
 
 #include        "Exception.hpp"
 #include        "Utilities.hpp"
 
 #define         FILE_SYSTEM "/dev/sr0"
+
+typedef void    (*FuncType)(char *const*);
 
 class           FPSShell
 {
@@ -22,6 +26,9 @@ private: // Functions
 
 private: // Members
     std::string _rootDir;
+    char        _line[256];
+    char*       _token;
+    std::map<std::string, FuncType> _Functions;
 };
 
 #endif	/* FPSSHELL_H */
