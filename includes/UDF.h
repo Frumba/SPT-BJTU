@@ -14,8 +14,13 @@ public:
     virtual ~UDF();
 
     bool                init();
+    
+private:
+    bool                isUDF();
+    
     void                goToSector(int);
     void                readNextSector(char *);
+        
 private:
     std::string         _fileDir;
     std::ifstream       _file;

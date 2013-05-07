@@ -9,24 +9,30 @@ typedef     unsigned int    Uint32;
 
 typedef     short           Int16;
 
-enum        SectorsNumber
+namespace   SN
 {
-    VOLUME_RECOGNITION_STRUCTURES = 16,
-    ANCHOR_VOLUME_DESCRIPTOR_POINTER = 256
-};
+    enum        SectorsNumber
+    {
+        VOLUME_RECOGNITION_STRUCTURES = 16,
+        ANCHOR_VOLUME_DESCRIPTOR_POINTER = 256
+    } ;
+}
 
-enum        TagIdentifier
+namespace   TI
 {
-    PRIMARY_VOLUME_DESCRIPTOR = 1,
-    ANCHOR_VOLUME_DESCRIPTOR_POINTER,
-    VOLUME_DESCRIPTOR_POINTER,
-    IMPLEMENTATION_USE_VOLUME_DESCRIPTOR,
-    PARTITION_DESCRIPTOR,
-    LOGICAL_VOLUME_DESCRIPTOR,
-    UNALLOCATED_SPACE_DESCRIPTOR,
-    TERMINATING_DESCRIPTOR,
-    LOGICAL_VOLUME_INTEGRITY_DESCRIPTOR
-};
+    enum        TagIdentifier
+    {
+        PRIMARY_VOLUME_DESCRIPTOR = 1,
+        ANCHOR_VOLUME_DESCRIPTOR_POINTER,
+        VOLUME_DESCRIPTOR_POINTER,
+        IMPLEMENTATION_USE_VOLUME_DESCRIPTOR,
+        PARTITION_DESCRIPTOR,
+        LOGICAL_VOLUME_DESCRIPTOR,
+        UNALLOCATED_SPACE_DESCRIPTOR,
+        TERMINATING_DESCRIPTOR,
+        LOGICAL_VOLUME_INTEGRITY_DESCRIPTOR
+    } ;
+}
 
 typedef struct      s_VolumeRecognitionStructures
 {
@@ -209,7 +215,7 @@ typedef union       u_UDFStruct
 
     t_VolumeRecognitionStructures   vrs;
     t_Content                       content;
-        
+
 }                   t_UDFStruct;
 
 #endif	/* UDFSTRUCTS_H */
