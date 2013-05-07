@@ -18,7 +18,7 @@ bool            UDF::init()
     char            ident[6];
     t_UDFStruct     info;
 
-    this->goToSector(SecNumber::VOLUME_RECOGNITION_STRUCTURES);
+    this->goToSector(VOLUME_RECOGNITION_STRUCTURES);
 
     this->readNextSector(info.buffer);
     strncpy(ident, info.vrs.standardIdentifier, 5);
