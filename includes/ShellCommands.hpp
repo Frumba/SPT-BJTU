@@ -7,7 +7,7 @@ class ShellCommands
 	** Magic methods
 	*/
 public:
-	ShellCommands();
+	ShellCommands(const char* a_root_path);
 	~ShellCommands();
 	/*
 	** Methods call to perform a special action
@@ -15,19 +15,24 @@ public:
 	*/
 private:
 	//
-	bool before_exec();
+	bool validate_path(const char* path);
 	/*
 	** Shell methods
 	*/
 public:
 	// Change directory
-	bool cd(const char* path);
+	bool cd(char* const * argv);
 	// List directory contents
-	bool ls(const char* path);
+	bool ls(char* const * argv);
+	//
+	bool pwd(char* const * argv);
+	//
+	bool cp(char* const * argv);
 
 	/*
 	** Attributs
 	*/
+	const char* root_path_;
 private:
 
 };
