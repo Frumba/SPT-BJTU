@@ -51,19 +51,28 @@ bool ShellCommands::validate_path(const char* path)
 */
 bool ShellCommands::cd(char* const * argv)
 {
-	if (validate_path(argv[0]) == false) {
+	if (argv[0] == NULL)
+		return (chdir(root_path_) == 0 ? true : false);
+	else if (validate_path(argv[0]) == false) {
 		std::cerr << "The path is incorrect." << std::endl;
 		return false;
 	}
-	if (argv[0] == NULL)
-		return false;
 	return (chdir(argv[0]) == 0 ? true : false);
 }
 /*
 **
 */
-bool ShellCommands::ls(char* const * argv)
+bool ShellCommands::ls(char* const * an_argv)
 {
+	size_t size = 0;
+	for (size = 0; an_argv[size] != NULL; size++)
+		;
+	char* argv[size + 2];
+	argv[0] = strdup("ls");
+	for (size = 0; an_argv[size] != NULL; size++) {
+		argv[size + 1] = an_argv[size];
+	}
+	argv[size + 1] = NULL;
 	switch(fork())
 	{
 		case -1: // error
