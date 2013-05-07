@@ -25,7 +25,7 @@ public:
 	// Change directory
 	bool cd(char* const * argv);
 	// List directory contents
-	bool ls(char* const * argv);
+	bool dir();
 	//
 	std::string* pwd();
 	//

@@ -50,10 +50,12 @@ void            FPSShell::run()
         }
         else if (strcmp(this->_token, "cd") == 0)
           cmd->cd(argv);
-        else if (strcmp(this->_token, "dir") == 0)
-          cmd->ls(argv);
         else if (strcmp(this->_token, "cp") == 0)
           cmd->cp(argv);
+        else if (strcmp(this->_token, "dir") == 0)
+          cmd->dir();
+        else if (strcmp(this->_token, "fdisk") == 0)
+            this->_udf->fdisk();
         else
           std::cout << "Command not found" << std::endl;
     }

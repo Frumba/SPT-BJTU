@@ -62,17 +62,12 @@ bool ShellCommands::cd(char* const * argv)
 /*
 **
 */
-bool ShellCommands::ls(char* const * an_argv)
+bool ShellCommands::dir()
 {
-	size_t size = 0;
-	for (size = 0; an_argv[size] != NULL; size++)
-		;
-	char* argv[size + 2];
+	char* argv[16];
 	argv[0] = strdup("ls");
-	for (size = 0; an_argv[size] != NULL; size++) {
-		argv[size + 1] = an_argv[size];
-	}
-	argv[size + 1] = NULL;
+    argv[1] = strdup("-l");
+	argv[2] = NULL;
 	switch(fork())
 	{
 		case -1: // error
