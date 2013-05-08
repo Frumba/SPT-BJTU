@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <sys/wait.h>
 
 #include "unused.h"
 #include "ShellCommands.hpp"
@@ -40,7 +41,6 @@ bool ShellCommands::validate_path(const char* path)
 		return false;
 	if (strstr(resolved_path, root_path_) == NULL)
 		return false;
-	std::cout << resolved_path << std::endl;
 	return true;
 }
 
@@ -73,6 +73,7 @@ bool ShellCommands::ls(char* const * argv)
 			execv("/bin/ls", argv);
 			break;
 		default: // parent process
+			wait(NULL);
 			break;
 	}
 	return true;
@@ -80,11 +81,17 @@ bool ShellCommands::ls(char* const * argv)
 /*
 **
 */
-bool ShellCommands::pwd(char* const * UNUSED(argv))
+std::string* ShellCommands::pwd()
 {
 	char buf[256];
-	std::cout << getcwd(buf, sizeof(buf)) << std::endl;
-	return true;
+	std::string current_path = std::string(getcwd(buf, sizeof(buf)));
+	size_t root_path_pos = current_path.find(root_path_);
+	if (root_path_pos == std::string::npos || root_path_pos != 0)
+		return NULL;
+	std::string* disk_path = new std::string(current_path.substr(strlen(root_path_)));
+	if (disk_path->empty())
+		disk_path->append("/");
+	return disk_path;
 }
 /*
 **
