@@ -13,7 +13,6 @@
 
 #define         FILE_SYSTEM "/dev/sr0"
 
-typedef bool    (ShellCommands::*FuncType)(char *const*);
 
 class           FPSShell
 {
@@ -29,10 +28,8 @@ private: // Functions
 private: // Members
     std::string _rootDir;
     UDF *       _udf;
-    ShellCommands*  _cmd;
     char        _line[256];
     char*       _token;
-    std::map<std::string, FuncType> _Functions;
 };
 
 #endif	/* FPSSHELL_H */
