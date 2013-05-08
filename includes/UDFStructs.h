@@ -1,6 +1,8 @@
 #ifndef UDFSTRUCTS_H
 #define	UDFSTRUCTS_H
 
+#include <stddef.h>
+
 #define     SECTOR 2048
 
 typedef     unsigned char   Uint8;

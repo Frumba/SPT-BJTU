@@ -41,7 +41,6 @@ void            UDF::fdisk()
     std::cout << this->_recordingTime << std::endl;
     std::cout << this->_fileSystemVersion << std::endl;
     std::cout << this->_totalSize << std::endl;
-    std::cout << this->_freeSize << std::endl;
 }
 
 bool            UDF::isUDF()
@@ -82,7 +81,6 @@ bool            UDF::fillDiskInfos()
     if (info.content.descriptorTag.tagIdentifier == 2)
     {
         bool    terDesc = false;
-        //std::ofstream    outfile("plop.txt");
 
         this->goToSector(info.content.descriptors.avdp.mainVolumeDescriptorSequenceExtent.extentLocation);
         while (!terDesc)
@@ -90,57 +88,61 @@ bool            UDF::fillDiskInfos()
             t_Timestamp   *     t;
             char                buff[512];
             char *              b;
+            std::string         str;
+            short               p;
+            int                 totalLength;
+            int                 startingPoint;
 
             this->readNextSector(info.buffer);
             t = &info.content.descriptors.pvd.recordingDateAndTime;
             switch (info.content.descriptorTag.tagIdentifier)
             {
                 case TI::PRIMARY_VOLUME_DESCRIPTOR:
-                    std::cout << "PRIMARY_VOLUME_DESCRIPTOR" << std::endl;
+//                    std::cout << "PRIMARY_VOLUME_DESCRIPTOR" << std::endl;
                     b = Unicodedecode(info.content.descriptors.pvd.volumeIdentifier, 32, buff);
                     this->_includingVolume = b;
-                    std::cout << this->_includingVolume << std::endl;
                     sprintf(buff, "Recording Time: %d-%d-%d  %d:%d:%d",
                         (int) t->year, (int) t->day, (int) t->month, (int) t->hour,
                         (int) t->minute, (int) t->second);
                     this->_recordingTime = buff;
-                    std::cout << this->_recordingTime << std::endl;
-                    //outfile.write(info.buffer, SECTOR);
                     break;
                 case TI::VOLUME_DESCRIPTOR_POINTER:
-                    std::cout << "VOLUME_DESCRIPTOR_POINTER" << std::endl;
-                    //outfile.write(info.buffer, SECTOR);
+//                    std::cout << "VOLUME_DESCRIPTOR_POINTER" << std::endl;
                     break;
                 case TI::IMPLEMENTATION_USE_VOLUME_DESCRIPTOR:
-                    std::cout << "IMPLEMENTATION_USE_VOLUME_DESCRIPTOR" << std::endl;
-                    //outfile.write(info.buffer, SECTOR);
+//                    std::cout << "IMPLEMENTATION_USE_VOLUME_DESCRIPTOR" << std::endl;
+                    memcpy(&p, info.content.descriptors.iuvd.implementationIdentifier.identifierSuffix, 2);
+                    str = Utilities::fromDec((int)p, 16);
+                    sprintf(buff, "UDF %c.%c%c", str.c_str()[0],
+                        str.c_str()[1], str.c_str()[2]);
+                    this->_fileSystemVersion = buff;
                     break;
                 case TI::PARTITION_DESCRIPTOR:
-                    std::cout << "PARTITION_DESCRIPTOR" << std::endl;
+//                    std::cout << "PARTITION_DESCRIPTOR" << std::endl;
+                    totalLength = info.content.descriptors.pd.partitionLength * SECTOR;
+                    startingPoint = info.content.descriptors.pd.partitionStartingLocation * SECTOR;
+                    totalLength -= startingPoint;
+                    sprintf(buff, "Disk size: %d bytes", totalLength);
+                    this->_totalSize = buff;
                     //outfile.write(info.buffer, SECTOR);
                     break;
                 case TI::LOGICAL_VOLUME_DESCRIPTOR:
-                    std::cout << "LOGICAL_VOLUME_DESCRIPTOR" << std::endl;
-                    //outfile.write(info.buffer, SECTOR);
+//                    std::cout << "LOGICAL_VOLUME_DESCRIPTOR" << std::endl;
                     break;
                 case TI::UNALLOCATED_SPACE_DESCRIPTOR:
-                    std::cout << "UNALLOCATED_SPACE_DESCRIPTOR" << std::endl;
-                    //outfile.write(info.buffer, SECTOR);
-                    break;
-                case TI::TERMINATING_DESCRIPTOR:
-                    std::cout << "TERMINATING_DESCRIPTOR" << std::endl;
-                    terDesc = true;
-                    //outfile.write(info.buffer, SECTOR);
+//                    std::cout << "UNALLOCATED_SPACE_DESCRIPTOR" << std::endl;
                     break;
                 case TI::LOGICAL_VOLUME_INTEGRITY_DESCRIPTOR:
-                    std::cout << "LOGICAL_VOLUME_INTEGRITY_DESCRIPTOR" << std::endl;
-                    //outfile.write(info.buffer, SECTOR);
+//                    std::cout << "LOGICAL_VOLUME_INTEGRITY_DESCRIPTOR" << std::endl;
+                    break;
+                case TI::TERMINATING_DESCRIPTOR:
+//                    std::cout << "TERMINATING_DESCRIPTOR" << std::endl;
+                    terDesc = true;
                     break;
             }
             if (this->_sectorOffset == 256)
                 return (false);
         }
-        //outfile.close();
         return (true);
     }
     return (false);

@@ -6,6 +6,7 @@
 #include    <string.h>
 
 #include    "UDFStructs.h"
+#include    "Utilities.hpp"
 
 class UDF
 {
