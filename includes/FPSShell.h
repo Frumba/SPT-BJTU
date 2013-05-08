@@ -8,6 +8,7 @@
 
 #include        "Exception.hpp"
 #include        "Utilities.hpp"
+#include        "UDF.h"
 #include        "ShellCommands.hpp"
 
 #define         FILE_SYSTEM "/dev/sr0"
@@ -27,6 +28,7 @@ private: // Functions
 
 private: // Members
     std::string _rootDir;
+    UDF *       _udf;
     ShellCommands*  _cmd;
     char        _line[256];
     char*       _token;
