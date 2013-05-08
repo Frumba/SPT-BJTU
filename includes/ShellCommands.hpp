@@ -1,6 +1,8 @@
 #ifndef _SHELL_COMMANDS_HPP_
 # define _SHELL_COMMANDS_HPP_
 
+# include <string>
+
 class ShellCommands
 {
 	/*
@@ -25,7 +27,7 @@ public:
 	// List directory contents
 	bool ls(char* const * argv);
 	//
-	bool pwd(char* const * argv);
+	std::string* pwd();
 	//
 	bool cp(char* const * argv);
 
