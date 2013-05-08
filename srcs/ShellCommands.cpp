@@ -51,12 +51,12 @@ bool ShellCommands::validate_path(const char* path)
 */
 bool ShellCommands::cd(char* const * argv)
 {
-	if (validate_path(argv[0]) == false) {
+	if (argv[0] == NULL)
+		return (chdir(root_path_) == 0 ? true : false);
+	else if (validate_path(argv[0]) == false) {
 		std::cerr << "The path is incorrect." << std::endl;
 		return false;
 	}
-	if (argv[0] == NULL)
-		return false;
 	return (chdir(argv[0]) == 0 ? true : false);
 }
 /*
